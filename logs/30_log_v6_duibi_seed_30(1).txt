@@ -1,0 +1,241 @@
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+Users of this version of Gym should be able to simply replace 'import gym' with 'import gymnasium as gym' in the vast majority of cases.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+/root/miniconda3/lib/python3.12/site-packages/requests/__init__.py:109: RequestsDependencyWarning: urllib3 (2.1.0) or chardet (7.4.1)/charset_normalizer (2.0.4) doesn't match a supported version!
+  warnings.warn(
+
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+🚀 AutoDL 一键跑穿论文全数据流水线 启动！
+★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+
+==================== 正在处理 Seed 30 ====================
+
+==================================================
+>>> 开始训练 WGMetaSAC | Seed 30 <<<
+==================================================
+>>> Setting global random seed (PyTorch): 30 <<<
+MetaSAC | Seed 30 | Epoch 0 | Score: -112.84 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 5 | Score: -137.19 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 10 | Score: 2019.66 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 15 | Score: 5716.59 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 20 | Score: 2707.73 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 25 | Score: 2493.42 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 30 | Score: 4148.12 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 35 | Score: 2347.01 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 40 | Score: 5315.19 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 45 | Score: 5686.20 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 50 | Score: 5499.64 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 55 | Score: 2326.68 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 60 | Score: 1771.15 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 65 | Score: 2227.24 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 70 | Score: 5173.10 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 75 | Score: 5788.89 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 80 | Score: 5389.42 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 85 | Score: 5692.34 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 90 | Score: 2452.02 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 95 | Score: 2081.15 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 100 | Score: 2365.36 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 105 | Score: 2266.02 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 110 | Score: 1975.77 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 115 | Score: 5176.51 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 120 | Score: 5438.19 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 125 | Score: 2258.60 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 130 | Score: 2384.60 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 135 | Score: 2048.22 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 140 | Score: 2307.44 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 145 | Score: 2393.04 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 150 | Score: 5108.01 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 155 | Score: 4830.14 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 160 | Score: 5605.30 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 165 | Score: 4862.43 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 170 | Score: 2479.52 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 175 | Score: 2444.35 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 180 | Score: 1353.60 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 185 | Score: 5171.11 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 190 | Score: 289.71 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 195 | Score: 5348.52 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 200 | Score: 2462.23 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 205 | Score: 5277.59 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 210 | Score: 5466.20 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 215 | Score: 5412.35 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 220 | Score: 5345.48 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 225 | Score: 5438.54 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 230 | Score: 2410.11 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 235 | Score: 5499.47 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 240 | Score: 5328.88 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 245 | Score: 5205.87 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 250 | Score: 5109.03 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 255 | Score: 5373.37 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 260 | Score: 33.39 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 265 | Score: 11.32 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 270 | Score: 5040.79 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 275 | Score: 5407.29 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 280 | Score: 5146.87 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 285 | Score: 4898.41 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 290 | Score: 5110.47 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 295 | Score: 4861.48 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 300 | Score: 3922.77 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 305 | Score: 2214.88 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 310 | Score: 2365.96 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 315 | Score: 4514.07 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 320 | Score: 4526.80 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 325 | Score: 5110.52 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 330 | Score: 4943.53 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 335 | Score: 4412.31 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 340 | Score: 2243.98 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 345 | Score: 75.29 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 350 | Score: 1976.93 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 355 | Score: 2226.69 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 360 | Score: 1635.58 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 365 | Score: 1628.81 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 370 | Score: 2093.07 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 375 | Score: 36.35 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 380 | Score: 2086.61 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 385 | Score: 1774.65 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 390 | Score: 5018.57 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 395 | Score: 2448.01 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 400 | Score: 5031.27 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 405 | Score: 2101.76 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 410 | Score: 2130.92 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 415 | Score: 2135.99 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 420 | Score: 2386.38 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 425 | Score: 1554.40 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 430 | Score: 4787.69 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 435 | Score: 1878.95 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 440 | Score: 1936.66 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 445 | Score: 1252.30 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 450 | Score: 5058.96 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 455 | Score: 4844.90 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 460 | Score: 2127.64 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 465 | Score: 2362.48 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 470 | Score: 5122.16 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 475 | Score: 5063.58 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 480 | Score: 2218.38 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 485 | Score: 1993.63 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 490 | Score: 5144.21 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 495 | Score: 4757.33 | Env: W=6.0, M=0.3, D=2
+
+==================================================
+>>> 开始训练 WGMetaSAC | Seed 30 <<<
+==================================================
+>>> Setting global random seed (PyTorch): 30 <<<
+MetaSAC | Seed 30 | Epoch 0 | Score: -121.05 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 5 | Score: -9.72 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 10 | Score: 1346.18 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 15 | Score: 2417.07 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 20 | Score: -46.91 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 25 | Score: 4889.02 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 30 | Score: 4592.93 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 35 | Score: 1637.54 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 40 | Score: 2085.66 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 45 | Score: 1932.93 | Env: W=0.0, M=0.0, D=0
+MetaSAC | Seed 30 | Epoch 50 | Score: 1912.99 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 55 | Score: 5082.86 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 60 | Score: 5377.12 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 65 | Score: 5117.52 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 70 | Score: 5487.26 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 75 | Score: 5411.95 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 80 | Score: 2131.99 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 85 | Score: 5557.19 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 90 | Score: 5418.51 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 95 | Score: 5635.13 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 100 | Score: 5664.68 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 105 | Score: 5560.01 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 110 | Score: 5691.35 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 115 | Score: 5136.58 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 120 | Score: 5514.93 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 125 | Score: 5759.15 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 130 | Score: 5396.23 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 135 | Score: 5707.00 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 140 | Score: 5695.99 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 145 | Score: 5638.44 | Env: W=2.0, M=0.1, D=1
+MetaSAC | Seed 30 | Epoch 150 | Score: 5419.53 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 155 | Score: 18.54 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 160 | Score: 5276.36 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 165 | Score: 5558.02 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 170 | Score: 5710.51 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 175 | Score: 5172.22 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 180 | Score: 5093.45 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 185 | Score: 5182.94 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 190 | Score: 5071.72 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 195 | Score: 5277.01 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 200 | Score: 5373.53 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 205 | Score: 5248.40 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 210 | Score: 5388.24 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 215 | Score: 5419.03 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 220 | Score: 5432.87 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 225 | Score: 5519.06 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 230 | Score: 5675.82 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 235 | Score: 5528.95 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 240 | Score: 5478.91 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 245 | Score: 5662.12 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 250 | Score: 5687.01 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 255 | Score: 5316.11 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 260 | Score: 5476.34 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 265 | Score: 5637.01 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 270 | Score: 5683.17 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 275 | Score: 5568.18 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 280 | Score: 5307.28 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 285 | Score: 5252.14 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 290 | Score: 5594.67 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 295 | Score: 5594.01 | Env: W=4.0, M=0.2, D=2
+MetaSAC | Seed 30 | Epoch 300 | Score: 5318.54 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 305 | Score: 5526.92 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 310 | Score: 5584.08 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 315 | Score: 70.17 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 320 | Score: 5623.21 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 325 | Score: 5748.19 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 330 | Score: 5250.21 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 335 | Score: 4038.62 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 340 | Score: 96.57 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 345 | Score: 877.73 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 350 | Score: 4861.44 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 355 | Score: 5577.59 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 360 | Score: 5317.46 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 365 | Score: 5449.47 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 370 | Score: 5270.00 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 375 | Score: 5451.80 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 380 | Score: 5178.99 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 385 | Score: 5536.19 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 390 | Score: 5395.46 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 395 | Score: 5407.43 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 400 | Score: 5265.55 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 405 | Score: 5628.49 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 410 | Score: 5537.12 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 415 | Score: 5362.65 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 420 | Score: 1383.07 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 425 | Score: 5319.95 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 430 | Score: 5638.74 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 435 | Score: 5733.62 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 440 | Score: 5466.49 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 445 | Score: 5466.90 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 450 | Score: 5516.56 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 455 | Score: 5614.57 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 460 | Score: 5574.95 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 465 | Score: 5763.38 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 470 | Score: 5550.12 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 475 | Score: 5727.86 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 480 | Score: 2656.63 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 485 | Score: -81.17 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 490 | Score: 5389.70 | Env: W=6.0, M=0.3, D=2
+MetaSAC | Seed 30 | Epoch 495 | Score: 5285.65 | Env: W=6.0, M=0.3, D=2
+
+>>> 正在生成 VSAC (Seed 30) 的图表测试数据... <<<
+
+>>> 正在生成 TD3 (Seed 30) 的图表测试数据... <<<
+
+>>> 正在生成 TQC (Seed 30) 的图表测试数据... <<<
+
+>>> 正在生成 RPPO (Seed 30) 的图表测试数据... <<<
+  [Fig 4] 正在生成可解释性分析数据 (含 pred_loss 追踪)...
+/root/autodl-tmp/UAV/run_all_experiments_v6_seed10.py:852: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /pytorch/torch/csrc/utils/tensor_new.cpp:254.)
+  meta_obs = torch.tensor([state], dtype=torch.float).to(agent.device)
+Traceback (most recent call last):
+  File "/root/autodl-tmp/UAV/run_all_experiments_v6_seed10.py", line 1139, in <module>
+    test_model_and_save_data(algo, seed)
+  File "/root/autodl-tmp/UAV/run_all_experiments_v6_seed10.py", line 852, in test_model_and_save_data
+    meta_obs = torch.tensor([state], dtype=torch.float).to(agent.device)
+                                                           ^^^^^
+UnboundLocalError: cannot access local variable 'agent' where it is not associated with a value
