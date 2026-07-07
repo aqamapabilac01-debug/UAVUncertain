@@ -1,5 +1,7 @@
 # UAVUncertain
+The data and code for the article SDR-LSAC
 
+This repository contains the official implementation of SDR-LSAC, a robust and adaptive deep reinforcement learning framework designed for unmanned aerial vehicle (UAV) trajectory tracking under severe wind gusts, variable payload, and execution/communication latencies
 
 Key Features
 
