@@ -1,7 +1,5 @@
 # UAVUncertain
-The data and code for the article AER-MDSAC
 
-This repository contains the official implementation of AER-MDSAC (Asymmetric Experience Replay - Meta Decoupled Soft Actor-Critic), a robust and adaptive deep reinforcement learning framework designed for unmanned aerial vehicle (UAV) trajectory tracking under severe wind gusts, variable payload, and execution/communication latencies
 
 Key Features
 
