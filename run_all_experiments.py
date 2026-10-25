@@ -25,30 +25,21 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 agent_WL = DualMetaSAC(device)
 
 def set_global_seeds_torch(seed=SEEDS[0]):#42
-    """
-    锁定所有随机性源头，确保 PyTorch 下的 RL 实验完全可复现
-    """
+
     print(f">>> Setting global random seed (PyTorch): {seed} <<<")
 
-    # 1. 锁定 Python 内置哈希种子（防止字典/集合遍历顺序随机）
     os.environ['PYTHONHASHSEED'] = str(seed)
 
-    # 2. 锁定 Python 内置 random 库
     random.seed(seed)
 
-    # 3. 锁定 NumPy 随机数生成器 (控制 ReplayBuffer 的 sample 与环境随机性)
     np.random.seed(seed)
 
-    # 4. 锁定 PyTorch 的 CPU 与 GPU 随机种子
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed(seed)
-        torch.cuda.manual_seed_all(seed)  # 如果使用了多卡 (Multi-GPU)
+        torch.cuda.manual_seed_all(seed)
 
-    # 5. 锁定 PyTorch 的 cuDNN 后端 (极其关键！)
-    # 禁用 benchmark 会损失一点点极限计算速度，但能保证每次卷积算法的选择是一致的
     torch.backends.cudnn.benchmark = False
-    # 强制使用确定性算法
     torch.backends.cudnn.deterministic = True
 
 shanghai_wp = generate_shanghai_logistics_map()[0]
@@ -139,7 +130,7 @@ class CurriculumCallback(BaseCallback):
         return True
 
 
-# Training Module for Our AER-MDSAC
+# Training Module for Our Mode
 
 
 def evaluate_metasac(env, agent, is_level_0, episodes=1):
@@ -157,7 +148,6 @@ def evaluate_metasac(env, agent, is_level_0, episodes=1):
 
 
 def train_metasac(seed):
-    print(f"\n{'=' * 50}\n>>> 启动 AER-MDSAC 自动化课程训练 | Seed {seed} <<<\n{'=' * 50}")
     set_global_seeds_torch(seed)
 
     # Environment initialization
@@ -280,7 +270,6 @@ def train_metasac(seed):
     np.save(f"results/Fig1_MetaSAC_seed{seed}.npy", eval_returns)
 
 def train_withoutlesson(seed):
-    print(f"\n{'=' * 50}\n>>> 开始训练 WLMetaSAC | Seed {seed} <<<\n{'=' * 50}")
     set_global_seeds_torch(seed)
     random.seed(seed)
     np.random.seed(seed)
@@ -338,7 +327,6 @@ def train_withoutlesson(seed):
     np.save(f"results/WLFig1_MetaSAC_seed{seed}.npy", eval_returns)
 
 def train_withoutper(seed):
-    print(f"\n{'=' * 50}\n>>> 开始训练 WPMetaSAC | Seed {seed} <<<\n{'=' * 50}")
     set_global_seeds_torch(seed)
     random.seed(seed)
     np.random.seed(seed)
@@ -409,7 +397,6 @@ def train_withoutper(seed):
     np.save(f"results/WPFig1_MetaSAC_seed{seed}.npy", eval_returns)
 
 def train_withoutcouple(seed):
-    print(f"\n{'=' * 50}\n>>> 开始训练 WCMetaSAC | Seed {seed} <<<\n{'=' * 50}")
     set_global_seeds_torch(seed)
     random.seed(seed)
     np.random.seed(seed)
@@ -480,7 +467,6 @@ def train_withoutcouple(seed):
     np.save(f"results/WCFig1_MetaSAC_seed{seed}.npy", eval_returns)
 
 def train_withoutgru(seed):
-    print(f"\n{'=' * 50}\n>>> 开始训练 WGMetaSAC | Seed {seed} <<<\n{'=' * 50}")
     set_global_seeds_torch(seed)
     random.seed(seed)
     np.random.seed(seed)
@@ -549,51 +535,10 @@ def train_withoutgru(seed):
 
     np.save(f"results/WGFig1_MetaSAC_seed{seed}.npy", eval_returns)
 
-# Train Baselines
-def train_sb3_baselines(algo_name, seed):
-    print(f"\n{'=' * 50}\n>>> 开始训练 Baseline: {algo_name} | Seed {seed} <<<\n{'=' * 50}")
-
-    def make_env():
-        env = FairBaselineWrapper(SmoothDroneEnv(shanghai_wp))
-        env = Monitor(env, f"logs/{algo_name}_s{seed}")
-        env.seed(seed)
-        return env
-
-    vec_env = DummyVecEnv([make_env])
-
-    if algo_name == "VSAC":
-        model = SAC("MlpPolicy", vec_env, verbose=0, seed=seed)
-    elif algo_name == "TD3":
-        action_noise = NormalActionNoise(mean=np.zeros(3), sigma=0.1 * np.ones(3))
-        model = TD3("MlpPolicy", vec_env, action_noise=action_noise, verbose=0, seed=seed)
-    elif algo_name == "TQC":
-        model = TQC("MlpPolicy", vec_env, top_quantiles_to_drop_per_net=2, verbose=0, seed=seed)
-    elif algo_name == "RPPO":
-        model = RecurrentPPO("MlpLstmPolicy", vec_env, n_steps=2048, batch_size=64, verbose=0, seed=seed)
-
-    cb = CurriculumCallback()
-    model.learn(total_timesteps=EPOCHS * STEPS_PER_EPOCH, callback=cb)
-    model.save(f"models/{algo_name}_s{seed}")
-
-
-# ==========================================
-# Testing and Data Generation Module
-# ==========================================
-def extract_sb3_curve(algo_name, seed):
-    """Extract SB3 monitoring logs"""
-
-    csv_path = f"logs/{algo_name}_s{seed}/monitor.csv"
-    if not os.path.exists(csv_path): return
-    df = pd.read_csv(csv_path, skiprows=1)
-    target_steps = np.linspace(0, EPOCHS * STEPS_PER_EPOCH, EPOCHS)
-    aligned_rewards = np.interp(target_steps, np.cumsum(df['l'].values), df['r'].values)
-    np.save(f"results/Fig1_{algo_name}_seed{seed}.npy", aligned_rewards)
-
 import time
 
 def test_model_and_save_data(algo_name, seed):
     """Perform random testing, recovery testing, and special trajectory recording"""
-    print(f"\n>>> 正在生成 {algo_name} (Seed {seed}) 的图表测试数据... <<<")
     # Models
     if algo_name == "MetaSAC":
         env = DualMetaContextWrapper(SmoothDroneEnv(shanghai_wp))
@@ -602,17 +547,6 @@ def test_model_and_save_data(algo_name, seed):
         agent.encoder.load_state_dict(torch.load(f"models/metasac_s{seed}_encoder.h5"))
         agent.critic.load_state_dict(torch.load(f"models/metasac_s{seed}_critic.h5"))
         get_action = lambda s: agent.take_action(s, deterministic=True, is_level_0=False)
-    else:
-        env = FairBaselineWrapper(SmoothDroneEnv(shanghai_wp))
-        if algo_name == "VSAC":
-            model = SAC.load(f"models/{algo_name}_s{seed}")
-        elif algo_name == "TD3":
-            model = TD3.load(f"models/{algo_name}_s{seed}")
-        elif algo_name == "TQC":
-            model = TQC.load(f"models/{algo_name}_s{seed}")
-        elif algo_name == "RPPO":
-            model = RecurrentPPO.load(f"models/{algo_name}_s{seed}")
-        get_action = lambda s: model.predict(s, deterministic=True)[0]
 
     # --- Record trajectory ---
     if seed == SEEDS[0]:
@@ -659,28 +593,6 @@ def test_model_and_save_data(algo_name, seed):
             log['action_y'].append(a[1])
             state, _, done, _ = env.step(a)
         np.save(f"results/MetaSACFig4_Interpretability_{seed}.npy", dict(log))
-
-    if algo_name == "RPPO" and seed == SEEDS[0]:
-        log = collections.defaultdict(list)
-        state = env.reset(random_start=False, determine = True)
-        env.wind_range, env.mass_var, env.max_delay = 6.0, 0.3, 0
-        done = False
-        while not done:
-            a = get_action(state)
-            with torch.no_grad():
-                meta_obs = torch.tensor([state], dtype=torch.float).to(agent.device)
-                obs, s_hist, a_hist = agent._split_obs(meta_obs)
-                z = agent.encoder(s_hist, a_hist)
-                pred_y = agent.encoder.predictor(z)[0, 1].item() * 6.0
-                q1, q2 = agent.critic(obs, z, torch.tensor([a], dtype=torch.float).to(agent.device))
-
-            log['true_wind_y'].append(env.unwrapped.wind[1])
-            log['pred_wind_y'].append(pred_y)
-            log['z_norm'].append(torch.norm(z).item())
-            log['q_value'].append(torch.min(q1, q2).item())
-            log['action_y'].append(a[1])
-            state, _, done, _ = env.step(a)
-        np.save(f"results/RPPOFig4_Interpretability_{seed}.npy", dict(log))
 
         # --- Table 1 and Table 2---
         for mode, (w, m, d, offset) in {"Table3": (3.0, 0.15, 1, 0.0), "Table6": (6.0, 0.3, 5, 15.0)}.items():
@@ -772,7 +684,6 @@ def evaluate_robustness(env, agent, wind, delay, mass_var=0.2, eval_episodes=20)
 
 
 def collect_ood_and_boundary_data(seed):
-    print(">>> 🚀 开始进行 OOD 泛化与鲁棒性崩溃边界测试... <<<")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     env = DualMetaContextWrapper(SmoothDroneEnv(shanghai_wp))
     agent = DualMetaSAC(device)
@@ -786,7 +697,6 @@ def collect_ood_and_boundary_data(seed):
 
     # OOD data
 
-    print("\n[任务 A] 正在收集二维 OOD 热力图数据...")
     winds = np.arange(0, 11, 1)  # 0 - 10 m/s
     delays = np.arange(0, 11, 1)  # 0 - 10 s
 
@@ -799,13 +709,7 @@ def collect_ood_and_boundary_data(seed):
             print(f"  Wind: {w} m/s | Delay: {d * 0.1:.1f} s -> Success Rate: {sr * 100:.1f}%")
 
     np.save(f"results/OOD_Heatmap_Data_s{seed}.npy", heatmap_data)
-    print("✅ OOD 热力图数据已保存！")
 
-    # ======================================================
-    # 任务 B: 鲁棒性崩溃边界数据收集 (单变量拉扯测试)
-    # ======================================================
-    print("\n[任务 B] 正在收集时延崩溃边界数据...")
-    # 固定一个有挑战性的风速 (如 4.0 m/s)，把延迟从 0 步拉到 15 步 (1.5秒)
     boundary_delays = np.arange(0, 16, 1)
     boundary_sr = []
 
@@ -815,31 +719,19 @@ def collect_ood_and_boundary_data(seed):
         print(f"  Fixed Wind: 4.0 m/s | Delay: {d * 0.1:.1f} s -> Success Rate: {sr * 100:.1f}%")
 
     np.save(f"results/Robustness_Boundary_Data_s{seed}.npy", np.array(boundary_sr))
-    print("✅ 崩溃边界数据已保存！全部测试完成！")
 
 
-# ==========================================
-# 主流程控制
-# ==========================================
 if __name__ == "__main__":
-    print("\n" + "★" * 50)
-    print("🚀 AutoDL 一键跑穿论文全数据流水线 启动！")
-    print("★" * 50 + "\n")
-    algos = ["MetaSAC", "VSAC", "TD3", "TQC", "RPPO"]
+    algos = ["MetaSAC"]
 
     for seed in SEEDS:
-        print(f"\n{'=' * 20} 正在处理 Seed {seed} {'=' * 20}")
-        # 1. 训练所有算法，包括消融和对比
+
         train_metasac(seed)
         train_withoutlesson(seed)
         train_withoutper(seed)
         train_withoutgru(seed)
         train_withoutcouple(seed)
-        for algo in algos[1:]:
-            train_sb3_baselines(algo, seed)
-            extract_sb3_curve(algo, seed)  # SB3提取曲线到npy
 
-        # 2. 测试并生成图表数据
         for algo in algos:
             test_model_and_save_data(algo, seed)
         collect_ood_and_boundary_data(seed)
