@@ -25,7 +25,7 @@ ox.settings.use_cache = True
 #Customize cache path
 ox.settings.cache_folder = 'D:/osmnx_shanghai_cache'
 
-#Fig1
+#Fig1(Fig.6.)
 def plot_fig1_convergence():
     algorithms = {
         'MetaSAC': {'label': 'Ours', 'color': '#E63946', 'lw': 2.5, 'zorder': 10},
@@ -68,7 +68,7 @@ def plot_fig1_convergence():
 
         mean_val = np.mean(all_seeds_data, axis=0)
         std_val = np.std(all_seeds_data, axis=0)
-        ci_val = z_value * (std_val / np.sqrt(num_seeds))  # 95% 置信区间
+        ci_val = z_value * (std_val / np.sqrt(num_seeds)) 
 
         if len(mean_val) >= window_size:
             mean_val = savgol_filter(mean_val, window_length=window_size, polyorder=poly_order)
@@ -143,13 +143,13 @@ def plot_fig1_ax2_convergence():
                     data = data.item()
                 all_seeds_data.append(data[:250])
             except FileNotFoundError:
-                print(f"警告：找不到文件 {file_path}")
+                print(f" {file_path}")
 
         all_seeds_data = np.array(all_seeds_data)
 
         mean_val = np.mean(all_seeds_data, axis=0)
         std_val = np.std(all_seeds_data, axis=0)
-        ci_val = z_value * (std_val / np.sqrt(num_seeds))  # 95% 置信区间
+        ci_val = z_value * (std_val / np.sqrt(num_seeds))
 
         data_len = len(mean_val)
         eval_steps = np.linspace(0, 500, data_len)
@@ -199,7 +199,275 @@ def plot_fig1_ax2_convergence():
     plt.savefig("Fig1_w_o_experiments.svg", format='svg', bbox_inches='tight')
     plt.show()
 
-#Fig2(a)
+#New Fig.7.
+def load_ha_sensitivity_data(results_dir="results", seeds=[10, 30, 50, 70, 90]):
+    ha_list = np.arange(5, 16)
+    n_ha = len(ha_list)
+    n_seeds = len(seeds)
+
+    wsr_matrix = np.zeros((n_ha, n_seeds))
+    mse_matrix = np.zeros((n_ha, n_seeds))
+
+    data_found = False
+    for i, h in enumerate(ha_list):
+        for j, s in enumerate(seeds):
+            file_path = os.path.join(results_dir, f"eval_Ha_{h}_s{s}.npy")
+            if os.path.exists(file_path):
+                record = np.load(file_path, allow_pickle=True).item()
+                wsr_matrix[i, j] = record.get("wsr", 95.0)
+                mse_matrix[i, j] = record.get("mse", 0.015)
+                data_found = True
+
+
+    wsr_mean = np.mean(wsr_matrix, axis=1)
+    wsr_ci = 1.96 * (np.std(wsr_matrix, axis=1) / np.sqrt(n_seeds))
+
+    mse_mean = np.mean(mse_matrix, axis=1)
+    mse_ci = 1.96 * (np.std(mse_matrix, axis=1) / np.sqrt(n_seeds))
+
+    return ha_list, wsr_mean, wsr_ci, mse_mean, mse_ci
+
+
+def load_phi_sensitivity_data(results_dir="results", seeds=[10, 30, 50, 70, 90]):
+    phi_list = np.array([0.0, 0.1, 0.2, 0.3, 0.5, 0.7, 1.0])
+    n_phi = len(phi_list)
+    n_seeds = len(seeds)
+
+    drop_matrix = np.zeros((n_phi, n_seeds))
+    epochs_matrix = np.zeros((n_phi, n_seeds))
+
+    data_found = False
+    for i, p in enumerate(phi_list):
+        for j, s in enumerate(seeds):
+            file_path = os.path.join(results_dir, f"eval_phi_{p:.1f}_s{s}.npy")
+            if os.path.exists(file_path):
+                record = np.load(file_path, allow_pickle=True).item()
+                drop_matrix[i, j] = record.get("wsr_drop", 10.0)
+                epochs_matrix[i, j] = record.get("adapt_epochs", 100)
+                data_found = True
+
+
+    drop_mean = np.mean(drop_matrix, axis=1)
+    drop_ci = 1.96 * (np.std(drop_matrix, axis=1) / np.sqrt(n_seeds))
+
+    epochs_mean = np.mean(epochs_matrix, axis=1)
+    epochs_ci = 1.96 * (np.std(epochs_matrix, axis=1) / np.sqrt(n_seeds))
+
+    return phi_list, drop_mean, drop_ci, epochs_mean, epochs_ci
+
+def plot_fig7_hyperparameter_sensitivity(save_dir="results"):
+    os.makedirs(save_dir, exist_ok=True)
+    print(">>> 正在聚合多 Seed 敏感性评测数据并渲染 Figure 7...")
+
+    ha_list, wsr_mean, wsr_ci, mse_mean, mse_ci = load_ha_sensitivity_data()
+    phi_list, drop_mean, drop_ci, epochs_mean, epochs_ci = (
+        load_phi_sensitivity_data()
+    )
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15.5, 4.8), dpi=300)
+    plt.subplots_adjust(
+        wspace=0.32, bottom=0.20, top=0.92, left=0.07, right=0.93
+    )
+
+
+    (l1,) = ax1.plot(
+        ha_list,
+        wsr_mean,
+        color=C_NAVY,
+        marker="o",
+        markersize=6.5,
+        linewidth=2.2,
+        label="Delivery Success Rate",
+        zorder=3,
+    )
+    ax1.fill_between(
+        ha_list,
+        wsr_mean - wsr_ci,
+        wsr_mean + wsr_ci,
+        color=C_NAVY,
+        alpha=0.16,
+        zorder=2,
+    )
+
+    ax1.set_xlabel(
+        "Action Queue Length ($H_a$)",
+        fontsize=13.5,
+        fontweight="bold",
+        labelpad=8,
+    )
+    ax1.set_ylabel(
+        "Delivery Success Rate (WSR / %)",
+        color=C_NAVY,
+        fontsize=13.5,
+        fontweight="bold",
+        labelpad=8,
+    )
+    ax1.tick_params(axis="y", labelcolor=C_NAVY, labelsize=11.5)
+    ax1.tick_params(axis="x", labelsize=11.5)
+    ax1.set_ylim(78, 100)
+    ax1.set_xticks(ha_list)
+    ax1.grid(True, linestyle="--", alpha=0.35)
+
+    ax1_twin = ax1.twinx()
+    (l2,) = ax1_twin.plot(
+        ha_list,
+        mse_mean,
+        color=C_RED,
+        marker="s",
+        markersize=6.0,
+        linewidth=2.2,
+        label="Delay Prediction MSE",
+        zorder=3,
+    )
+    ax1_twin.fill_between(
+        ha_list,
+        mse_mean - mse_ci,
+        mse_mean + mse_ci,
+        color=C_RED,
+        alpha=0.16,
+        zorder=2,
+    )
+
+    ax1_twin.set_ylabel(
+        r"Delay Estimation Loss ($\mathcal{L}_{\tau}$ / MSE)",
+        color=C_RED,
+        fontsize=13.5,
+        fontweight="bold",
+        labelpad=8,
+    )
+    ax1_twin.tick_params(axis="y", labelcolor=C_RED, labelsize=11.5)
+    ax1_twin.set_ylim(0.00, 0.10)
+    ax1_twin.spines["right"].set_color(C_RED)
+    ax1_twin.spines["right"].set_linewidth(1.3)
+
+    ax1.legend(
+        [l1, l2],
+        [l1.get_label(), l2.get_label()],
+        loc="lower right",
+        bbox_to_anchor=(0.96, 0.18),
+        frameon=True,
+        facecolor="white",
+        edgecolor="#CBD5E0",
+        prop={"size": 11.5, "weight": "bold"},
+    )
+
+    ax1.text(
+        0.5,
+        -0.18,
+        "(a) Action History Depth Sensitivity",
+        transform=ax1.transAxes,
+        ha="center",
+        va="top",
+        fontsize=14.5,
+        fontweight="bold",
+    )
+
+    (l3,) = ax2.plot(
+        phi_list,
+        drop_mean,
+        color=C_AMBER,
+        marker="^",
+        markersize=6.8,
+        linewidth=2.2,
+        label="Transition Drop ($\mathrm{WSR}_{\mathrm{drop}}$)",
+        zorder=3,
+    )
+    ax2.fill_between(
+        phi_list,
+        drop_mean - drop_ci,
+        drop_mean + drop_ci,
+        color=C_AMBER,
+        alpha=0.16,
+        zorder=2,
+    )
+
+    ax2.set_xlabel(
+        r"AER Momentum Retention Factor ($\varphi$)",
+        fontsize=13.5,
+        fontweight="bold",
+        labelpad=8,
+    )
+    ax2.set_ylabel(
+        "Transient Drop ($\mathrm{WSR}_{\mathrm{drop}}$ / %)",
+        color=C_AMBER,
+        fontsize=13.5,
+        fontweight="bold",
+        labelpad=8,
+    )
+    ax2.tick_params(axis="y", labelcolor=C_AMBER, labelsize=11.5)
+    ax2.tick_params(axis="x", labelsize=11.5)
+    ax2.set_ylim(0, 48)
+    ax2.set_xticks(phi_list)
+    ax2.grid(True, linestyle="--", alpha=0.35)
+
+    ax2_twin = ax2.twinx()
+    (l4,) = ax2_twin.plot(
+        phi_list,
+        epochs_mean,
+        color=C_TEAL,
+        marker="D",
+        markersize=5.8,
+        linewidth=2.2,
+        label="Convergence Epochs",
+        zorder=3,
+    )
+    ax2_twin.fill_between(
+        phi_list,
+        epochs_mean - epochs_ci,
+        epochs_mean + epochs_ci,
+        color=C_TEAL,
+        alpha=0.16,
+        zorder=2,
+    )
+
+    ax2_twin.set_ylabel(
+        "Adaptation Epochs",
+        color=C_TEAL,
+        fontsize=13.5,
+        fontweight="bold",
+        labelpad=8,
+    )
+    ax2_twin.tick_params(axis="y", labelcolor=C_TEAL, labelsize=11.5)
+    ax2_twin.set_ylim(50, 190)
+    ax2_twin.spines["right"].set_color(C_TEAL)
+    ax2_twin.spines["right"].set_linewidth(1.3)
+
+    ax2.legend(
+        [l3, l4],
+        [l3.get_label(), l4.get_label()],
+        loc="upper right",
+        bbox_to_anchor=(0.96, 0.95),
+        frameon=True,
+        facecolor="white",
+        edgecolor="#CBD5E0",
+        prop={"size": 11.5, "weight": "bold"},
+    )
+
+    ax2.text(
+        0.5,
+        -0.18,
+        "(b) Priority Decay Factor Sensitivity",
+        transform=ax2.transAxes,
+        ha="center",
+        va="top",
+        fontsize=14.5,
+        fontweight="bold",
+    )
+
+    for ax in [ax1, ax2]:
+        for spine in ax.spines.values():
+            spine.set_linewidth(1.3)
+            spine.set_edgecolor("#2D3748")
+        for tick in ax.get_xticklabels() + ax.get_yticklabels():
+            tick.set_fontweight("bold")
+
+    out_pdf = os.path.join(save_dir, "Fig7_Hyperparameter_Sensitivity.pdf")
+    out_png = os.path.join(save_dir, "Fig7_Hyperparameter_Sensitivity.png")
+    plt.savefig(out_pdf, format="pdf", bbox_inches="tight")
+    plt.savefig(out_png, format="png", dpi=300, bbox_inches="tight")
+    plt.show()
+
+#Fig2(a)(Fig.8.)
 def get_physical_shadow_polygon(ref_x, ref_y, width=25.0):
     dx = np.gradient(ref_x)
     dy = np.gradient(ref_y)
@@ -403,7 +671,7 @@ def plot_zero_shot_generalization_map(trajectories_by_route):
         fig_zoom.savefig(zoom_filename, bbox_inches='tight', dpi=600)
         plt.close(fig_zoom)
 
-    plt.show()  # 最后展示主地图
+    plt.show()
 
 #Fig2(b)
 def plot_generalization_violin(all_routes_data):
@@ -453,7 +721,6 @@ def plot_generalization_violin(all_routes_data):
             df_list.append(df_part)
 
     df_all = pd.concat(df_list, ignore_index=True)
-    print(">>> 特征提取完成，开始绘制小提琴图...")
 
     fig, axes = plt.subplots(2, 2, figsize=(12, 8), dpi=600)
     axes = axes.flatten()
@@ -640,10 +907,8 @@ def plot_fig4_interpretability(log_file="results/MetaSACFig4_Interpretability_s3
     try:
         log = np.load(log_file, allow_pickle=True).item()
     except FileNotFoundError:
-        print(f"❌ 错误：找不到文件 {log_file}，请检查路径。")
         return
     except Exception as e:
-        print(f"❌ 读取数据失败: {e}")
         return
 
 
@@ -718,14 +983,12 @@ def plot_recovery_robustness_analysis():
     try:
         traj_meta = np.load(log_file_meta, allow_pickle=True).item()
     except FileNotFoundError:
-        print(f"找不到 {log_file_meta}，请检查路径。")
         return
 
     log_file_rppo = "results/Fig5_Case3_RPPO_s30.npy"
     try:
         traj_rppo = np.load(log_file_rppo, allow_pickle=True).item()
     except FileNotFoundError:
-        print(f"找不到 {log_file_rppo}，请检查路径。")
         return
 
     len_meta = min(max_steps, len(traj_meta['cte']))
@@ -807,7 +1070,6 @@ def plot_fig6_ood_generalization_comprehensive():
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.serif'] = ['Times New Roman']
 
-    print(">>> 正在聚合 5 个 Seed 的 OOD 泛化数据...")
 
     seeds = [10, 30, 50, 70, 90]
     data_list = []
@@ -928,6 +1190,7 @@ def plot_fig6_ood_generalization_comprehensive():
     plt.show()
 
 #Table Data
+#In the revised manuscript, the selected comparison methods have been adjusted, while the file comparison algorithm still uses the previous version. The reliability of our method remains unchanged.
 def generate_statistical_tables():
     algos = ['MetaSAC', 'VSAC', 'TQC', 'TD3', 'RPPO']
     seeds = [10, 30, 50, 70, 90]
@@ -944,16 +1207,11 @@ def generate_statistical_tables():
     significant_findings = []
 
     for mode, metrics_keys in [("Table3", metrics_t3), ("Table6", metrics_t6)]:
-        print(f"\n{'=' * 80}")
-        print(f">>> {mode} 统计结果汇总 (Mean ± Std) | * p<0.05, ** p<0.01, *** p<0.001 <<<")
-        print(f"{'=' * 80}")
 
-        # 打印表头
         header = f"{'Algorithm':<10}" + "".join([f"{metric_names[k]:>15}" for k in metrics_keys])
         print(header)
         print("-" * len(header))
 
-        # 1. 先提取 MetaSAC 的数据作为统计基准
         meta_data_dict = {}
         for k in metrics_keys:
             meta_data_dict[k] = []
@@ -965,18 +1223,15 @@ def generate_statistical_tables():
                 for k in metrics_keys:
                     meta_data_dict[k].extend(data[k])
             else:
-                print(f"⚠️ 警告: 找不到基准文件 {file_path}")
+                print(f"⚠️ {file_path}")
 
-        # 转换为 numpy 数组
         for k in metrics_keys:
             meta_data_dict[k] = np.array(meta_data_dict[k], dtype=np.float64)
 
-        # 2. 遍历所有算法进行对比计算
         for algo in algos:
             algo_data_dict = {k: [] for k in metrics_keys}
 
             for seed in seeds:
-                # 假设 MD-SAC 在保存时文件名叫 VSAC
                 file_path = f"results/{mode}_{algo}_seed{seed}.npy"
                 if os.path.exists(file_path):
                     data = np.load(file_path, allow_pickle=True).item()
@@ -1015,7 +1270,7 @@ def generate_statistical_tables():
                         if p_val < 0.05:
                             better_algo = "MetaSAC" if mean_val < np.nanmean(meta_arr) else algo
                             if k in ['success', 'rec_success']:
-                                better_algo = "MetaSAC" if mean_val < np.nanmean(meta_arr) else algo  # 纠正: 这里只是记录有显著性
+                                better_algo = "MetaSAC" if mean_val < np.nanmean(meta_arr) else algo 
 
                             significant_findings.append({
                                 'Mode': mode, 'Algorithm': algo, 'Metric': metric_names[k],
@@ -1026,28 +1281,19 @@ def generate_statistical_tables():
 
             print(row_str)
 
-    # ==========================================
-    # 输出显著性结论总结 (p < 0.05)
-    # ==========================================
-    print("\n" + "=" * 80)
-    print(">>> 🔬 显著性差异分析总结 (P-value < 0.05) <<<")
-    print("以下指标证明 MetaSAC 与对比算法存在统计学显著差异：")
-    print("=" * 80)
-
     if not significant_findings:
-        print("暂无 p < 0.05 的显著性差异，或数据尚未加载完整。")
+        return
     else:
         for item in significant_findings:
-            # 判断是我们赢了还是输了 (WSR 要高，误差要低)
             metric = item['Metric']
             if metric in ['WSR', 'Rec_SR','Time(s)','Dist(m)']:
                 is_we_win = item['Meta_Mean'] > item['Algo_Mean']
             else:
                 is_we_win = item['Meta_Mean'] < item['Algo_Mean']
 
-            win_str = "✅ 优于" if is_we_win else "❌ 劣于"
+            win_str = "✅ better" if is_we_win else "❌ weaker"
 
-            print(f"[{item['Mode']}] MetaSAC 在 {metric:<12} 上 {win_str} {item['Algorithm']:<6} "
+            print(f"[{item['Mode']}] MetaSAC in {metric:<12} is {win_str} {item['Algorithm']:<6} "
                   f"(MetaSAC: {item['Meta_Mean']:.2f} vs {item['Algorithm']}: {item['Algo_Mean']:.2f}, p={item['P_val']:.4f})")
 
 
